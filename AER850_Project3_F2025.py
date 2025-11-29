@@ -40,8 +40,41 @@ if __name__ == "__main__":
     cv.destroyAllWindows()
     
     
+    #MODEL BUILDING. ONLY RUN IF COMPUTER CAPABLE
+    #model = YOLO("yolo11n.pt")
+    #trained = model.train(data="data/data/data/data.yaml", batch = 8, epochs = 100, imgsz = 900, name = "Prj3Mdl")
     
-    model = YOLO("yolo11n.pt")
-   
-    trained = model.train(data="data/data/data/data.yaml", batch = 8, epochs = 100, imgsz = 900, name = "Prj3Mdl")
-    
+model = YOLO('data/best.pt')
+
+results1 = model.predict('data/data/data/evaluation/ardmega.jpg', save = False)
+for result in results1:
+    # plot the results with specified font size (labelsize) and thickness (boxes)
+    # The 'conf' and 'line_width' arguments help control what is plotted
+    im_plot = result.plot(font_size=1, line_width=5) # Adjust labelsize and line_width as needed
+    cv.namedWindow('Prediction', cv.WINDOW_NORMAL)
+    cv.imshow("Prediction", im_plot)
+    cv.waitKey(0)
+
+cv.destroyAllWindows()
+
+results2 = model.predict('data/data/data/evaluation/arduno.jpg', save = False)
+for result in results2:
+    # plot the results with specified font size (labelsize) and thickness (boxes)
+    # The 'conf' and 'line_width' arguments help control what is plotted
+    im_plot = result.plot(font_size=1, line_width=2) # Adjust labelsize and line_width as needed
+    cv.namedWindow('Prediction', cv.WINDOW_NORMAL)
+    cv.imshow("Prediction", im_plot)
+    cv.waitKey(0)
+
+cv.destroyAllWindows()
+
+results3 = model.predict('data/data/data/evaluation/rasppi.jpg', save = False)
+for result in results3:
+    # plot the results with specified font size (labelsize) and thickness (boxes)
+    # The 'conf' and 'line_width' arguments help control what is plotted
+    im_plot = result.plot(font_size=1, line_width=5) # Adjust labelsize and line_width as needed
+    cv.namedWindow('Prediction', cv.WINDOW_NORMAL)
+    cv.imshow("Prediction", im_plot)
+    cv.waitKey(0)
+
+cv.destroyAllWindows()
