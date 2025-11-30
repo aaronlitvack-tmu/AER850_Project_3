@@ -18,7 +18,7 @@ if __name__ == "__main__":
     #cv.imwrite('imgg_thresh.jpg', thresh)
     cv.destroyAllWindows()
     
-    contours, hierarchy = cv.findContours(image=thresh, mode=cv.RETR_EXTERNAL, method=cv.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv.findContours(image=thresh, mode=cv.RETR_EXTERNAL, method=cv.CHAIN_APPROX_SIMPLE)
                                           
     # draw contours on the original image
     
@@ -29,12 +29,14 @@ if __name__ == "__main__":
         cv.drawContours(mask, [largest_contour], -1, (255, 255, 255), -1)    
         
     masked_image = cv.bitwise_and(img, mask)
+    contoursimg = img.copy()
+    cv.drawContours(contoursimg, largest_contour, -1, (0, 255, 0), 10)
     
-    # cv.namedWindow('Original Image', cv.WINDOW_NORMAL)
-    # cv.namedWindow('Mask', cv.WINDOW_NORMAL)
+    cv.namedWindow('Edge', cv.WINDOW_NORMAL)
+    cv.namedWindow('Mask', cv.WINDOW_NORMAL)
     cv.namedWindow('Masked Image', cv.WINDOW_NORMAL)
-    # cv.imshow('Original Image', img)
-    # cv.imshow('Mask', mask)
+    cv.imshow('Edge', contoursimg)
+    cv.imshow('Mask', mask)
     cv.imshow('Masked Image', masked_image)
     cv.waitKey(0)
     cv.destroyAllWindows()
@@ -44,7 +46,7 @@ if __name__ == "__main__":
     #model = YOLO("yolo11n.pt")
     #trained = model.train(data="data/data/data/data.yaml", batch = 8, epochs = 100, imgsz = 900, name = "Prj3Mdl")
     
-model = YOLO('data/best.pt')
+model = YOLO('data/best150.pt')
 
 results1 = model.predict('data/data/data/evaluation/ardmega.jpg', save = False)
 for result in results1:
